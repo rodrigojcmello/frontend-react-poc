@@ -16,6 +16,8 @@ module.exports = {
     new HtmlWebpackPlugin({ template: './index.html' }),
   ],
   devServer: { historyApiFallback: true },
+  resolve: { extensions: ['.tsx', '.ts', '.js'] },
+  devtool: 'source-map',
   module: {
     rules: [
       {
