@@ -1,11 +1,46 @@
 import React, { ReactElement } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import { renderRoutes } from 'react-router-config';
-import routes from './routes';
+import Summary from './Summary';
+import BreedList from './Fetch/BreedList';
+import BreedImages from './Fetch/BreedImages';
+import PostList from './Fetch/PostList';
 
 function App(): ReactElement {
-  return <BrowserRouter>{renderRoutes(routes)}</BrowserRouter>;
+  return (
+    <Router>
+      <Switch>
+        <Route path="/" exact component={Summary} />
+        {/* <Route> */}
+        {/*  <Route path="/fetch-breed" exact component={BreedList} /> */}
+        {/*  <Route path="/fetch-breed/:breed" exact component={BreedImages} /> */}
+        {/* </Route> */}
+        <Route>
+          <Route path="/fetch-post" exact component={PostList} />
+          {/* <Route path="/fetch-post/:id" exact component={BreedImages} /> */}
+        </Route>
+        <Route path="*" component={(): ReactElement => <div>404 --</div>} />
+      </Switch>
+
+      {/* <Route path="/fetch-breed"> */}
+      {/*  <Route path="/fetch-breed/"> */}
+      {/*    <BreedList /> */}
+      {/*  </Route> */}
+      {/*  <Route path="/fetch-breed/teste"> */}
+      {/*    <BreedImages /> */}
+      {/*  </Route> */}
+      {/* </Route> */}
+      {/* <Route */}
+      {/*  path="/fetch-breed" */}
+      {/*  render={({ match: { url } }): ReactElement => ( */}
+      {/*    <> */}
+      {/*      <Route path={`${url}/`} component={BreedList} exact /> */}
+      {/*      <Route path={`${url}/images`} component={BreedImages} /> */}
+      {/*    </> */}
+      {/*  )} */}
+      {/* /> */}
+    </Router>
+  );
 }
 
 ReactDOM.render(<App />, document.querySelector('#root'));

@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 function request<R>(url: string): Promise<R> {
   return fetch(url)
     .then((response) => {
@@ -9,9 +7,8 @@ function request<R>(url: string): Promise<R> {
       return Promise.reject(new Error(response.statusText));
     })
     .then((response) => response.json())
-    .then((data) => data.message)
     .catch((error) => {
-      console.error(error);
+      // console.error(error);
       throw error;
     });
 }
