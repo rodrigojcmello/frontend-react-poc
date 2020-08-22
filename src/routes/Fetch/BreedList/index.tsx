@@ -22,7 +22,6 @@ function BreedList(): ReactElement {
             name: value,
             types: data[value],
           });
-          return undefined;
         });
         setBreeds(newBreeds);
       }

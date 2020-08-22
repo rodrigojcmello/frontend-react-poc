@@ -1,24 +1,24 @@
-import React, { ReactElement } from 'react';
+import React, { FC, ReactElement } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import Summary from './Summary';
 import BreedList from './Fetch/BreedList';
 import BreedImages from './Fetch/BreedImages';
-import PostList from './Fetch/PostList';
+// import PostList from './Fetch/PostList';
 
-function App(): ReactElement {
+const App: FC = () => {
   return (
     <Router>
       <Switch>
         <Route path="/" exact component={Summary} />
-        {/* <Route> */}
-        {/*  <Route path="/fetch-breed" exact component={BreedList} /> */}
-        {/*  <Route path="/fetch-breed/:breed" exact component={BreedImages} /> */}
-        {/* </Route> */}
         <Route>
-          <Route path="/fetch-post" exact component={PostList} />
-          {/* <Route path="/fetch-post/:id" exact component={BreedImages} /> */}
+          <Route path="/fetch-breed" exact component={BreedList} />
+          <Route path="/fetch-breed/:breed" exact component={BreedImages} />
         </Route>
+        {/* <Route> */}
+        {/*  <Route path="/fetch-post" exact component={PostList} /> */}
+        {/*  /!* <Route path="/fetch-post/:id" exact component={BreedImages} /> *!/ */}
+        {/* </Route> */}
         <Route path="*" component={(): ReactElement => <div>404 --</div>} />
       </Switch>
 
@@ -41,6 +41,6 @@ function App(): ReactElement {
       {/* /> */}
     </Router>
   );
-}
+};
 
 ReactDOM.render(<App />, document.querySelector('#root'));

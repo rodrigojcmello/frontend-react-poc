@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const cssnano = require('cssnano');
 const autoprefixer = require('autoprefixer');
 const tailwindcss = require('tailwindcss');
+const PnpWebpackPlugin = require('pnp-webpack-plugin');
 
 module.exports = (env = { NODE_ENV: '' }) => {
   const prod = env.NODE_ENV !== 'development';
@@ -17,7 +18,13 @@ module.exports = (env = { NODE_ENV: '' }) => {
     },
     mode: prod ? 'production' : 'development',
     plugins: [new HtmlWebpackPlugin({ template: './index.html' })],
-    resolve: { extensions: ['.tsx', '.ts', '.js'] },
+    resolve: {
+      extensions: ['.tsx', '.ts', '.js'],
+      plugins: [PnpWebpackPlugin],
+    },
+    resolveLoader: {
+      plugins: [PnpWebpackPlugin.moduleLoader(module)],
+    },
     devtool: 'source-map',
     module: {
       rules: [
