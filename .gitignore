@@ -1,6 +1,14 @@
 # Npm
 node_modules
 
+# Yarn 2
+.yarn/*
+!.yarn/cache
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+
 # IDE
 .idea
 
