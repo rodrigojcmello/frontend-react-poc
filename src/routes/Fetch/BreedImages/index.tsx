@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 import request from '../../../utils/request';
 import { BreedImagesResponse } from './types';
 import Container from '../../../components/Container';
@@ -7,7 +7,7 @@ import twcss from '../../../utils/style';
 
 function BreedImages(): ReactElement {
   const [images, setImages] = useState<string[]>([]);
-  const { breed } = useParams();
+  const { breed } = useParams<{ breed: string }>();
 
   useEffect(() => {
     (async (): Promise<void> => {
