@@ -1,5 +1,9 @@
 # Npm
 node_modules
+package-lock.json
+
+# Yarn
+yarn.lock
 
 # Yarn 2
 .yarn/*
@@ -7,6 +11,7 @@ node_modules
 !.yarn/plugins
 !.yarn/sdks
 !.yarn/versions
+.pnp.*
 
 # IDE
 .idea
