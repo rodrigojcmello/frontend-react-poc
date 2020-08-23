@@ -17,7 +17,7 @@ function BreedList(): ReactElement {
       });
       if (data) {
         const newBreeds: Breed[] = [];
-        Object.keys(data).map((value): void => {
+        Object.keys(data).forEach((value): void => {
           newBreeds.push({
             name: value,
             types: data[value],
