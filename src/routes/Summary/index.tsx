@@ -1,7 +1,7 @@
-import React, { ReactElement } from 'react';
+import React, { FC } from 'react';
 
-function Summary(): ReactElement {
+const Summary: FC = () => {
   return <div>summary</div>;
-}
+};
 
 export default Summary;

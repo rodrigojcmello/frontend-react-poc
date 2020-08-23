@@ -17,17 +17,17 @@ overrides:
 
     env:
       browser: true
-      es6: true
+      es2020: true
       jest: true
 
-    parser: "@typescript-eslint/parser"
+    parser: '@typescript-eslint/parser'
 
     parserOptions:
       # TypeScript
       project: tsconfig.json
 
       # Modern JavaScript
-      ecmaVersion: 2018
+      ecmaVersion: 11
       sourceType: module
 
       # React
@@ -44,18 +44,18 @@ overrides:
       - plugin:jest-dom/recommended
 
       # TypeScript
-      - plugin:@typescript-eslint/eslint-recommended
-      - plugin:@typescript-eslint/recommended
+      - 'plugin:@typescript-eslint/recommended'
+      - plugin:import/typescript
 
       # Prettier
       - plugin:prettier/recommended
       - prettier
       - prettier/react
-      - prettier/@typescript-eslint
+      - 'prettier/@typescript-eslint'
 
     plugins:
       - react
-      - "@typescript-eslint"
+      - '@typescript-eslint'
       - prettier
 
       # Extra awesome ESLint rules
@@ -75,6 +75,9 @@ overrides:
       # JavaScript: Limit 300 lines per file
       max-lines: 1
 
+      # TypeScript: Ensure values returned from functions
+      '@typescript-eslint/explicit-function-return-type': 1
+
       # ---------------------------------------------------------------------------
       # Overwritten rules
       # ---------------------------------------------------------------------------
@@ -85,6 +88,7 @@ overrides:
         - extensions:
             - ".tsx"
 
+      # PropTypes is not necessary with TypeScript
       react/jsx-props-no-spreading: off
 
       # Import: Resolves TypeScript extensions
@@ -110,17 +114,10 @@ overrides:
             camelCase: true
 
       # React needs props abbreviation
-      unicorn/prevent-abbreviations: off
+      unicorn/prevent-abbreviations:
+        - error
+        - whitelist:
+            props: true
+            Props: true
 
-    settings:
-      # React: Detects React version
-      react:
-        version: detect
 
-      # Import: Resolves JavaScript and TypeScript extensions
-      import/resolver:
-        node:
-          extensions:
-            - ".js"
-            - ".ts"
-            - ".tsx"
