@@ -2,21 +2,29 @@ const path = require('path');
 const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const cssnano = require('cssnano');
 const autoprefixer = require('autoprefixer');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const tailwindcss = require('tailwindcss');
 
 module.exports = (env = { NODE_ENV: '' }) => {
   const prod = env.NODE_ENV !== 'development';
 
-  const config = {
+  const postcssPlugins = () => [tailwindcss(), autoprefixer()];
+
+  return {
     entry: './src/routes/index.tsx',
     output: {
       filename: '[name].[chunkhash].js',
-      path: path.resolve(__dirname, './dist'),
+      path: path.resolve(__dirname, 'build'),
     },
     mode: prod ? 'production' : 'development',
-    plugins: [new HtmlWebpackPlugin({ template: './index.html' })],
+    ...(prod ? { devtool: 'source-map' } : {}),
+    devServer: !prod ? { historyApiFallback: true } : {},
+    plugins: [
+      new HtmlWebpackPlugin({ template: './index.html' }),
+      new MiniCssExtractPlugin(),
+      prod ? new CleanWebpackPlugin() : new webpack.ProgressPlugin(),
+    ],
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
     },
@@ -39,9 +47,9 @@ module.exports = (env = { NODE_ENV: '' }) => {
           ],
         },
         {
-          test: /\.s?css$/,
+          test: /\.module.s?css$/,
           use: [
-            'style-loader',
+            MiniCssExtractPlugin.loader,
             'css-modules-typescript-loader',
             {
               loader: 'css-loader',
@@ -54,10 +62,22 @@ module.exports = (env = { NODE_ENV: '' }) => {
             {
               loader: 'postcss-loader',
               options: {
-                plugins: () =>
-                  prod
-                    ? [tailwindcss(), autoprefixer(), cssnano()]
-                    : [tailwindcss()],
+                ident: 'postcss',
+                plugins: postcssPlugins,
+              },
+            },
+            'sass-loader',
+          ],
+        },
+        {
+          test: /^((?!\.module).)*s?css$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: postcssPlugins,
               },
             },
             'sass-loader',
@@ -66,12 +86,4 @@ module.exports = (env = { NODE_ENV: '' }) => {
       ],
     },
   };
-  if (prod) {
-    config.plugins.push(new CleanWebpackPlugin());
-  } else {
-    config.devtool = 'source-map';
-    config.devServer = { historyApiFallback: true };
-    config.plugins.push(new webpack.ProgressPlugin());
-  }
-  return config;
 };

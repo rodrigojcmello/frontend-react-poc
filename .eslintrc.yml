@@ -82,6 +82,8 @@ overrides:
       # Overwritten rules
       # ---------------------------------------------------------------------------
 
+      import/prefer-default-export: off
+
       # React: Allows use tsx files
       react/jsx-filename-extension:
         - error

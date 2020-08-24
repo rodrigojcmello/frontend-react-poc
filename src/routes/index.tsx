@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import Summary from './Summary';
 import BreedList from './Fetch/BreedList';
 import BreedImages from './Fetch/BreedImages';
+import '../styles/global/main.scss';
 // import PostList from './Fetch/PostList';
 
 const App: FC = () => {

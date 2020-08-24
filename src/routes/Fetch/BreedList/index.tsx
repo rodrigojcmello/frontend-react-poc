@@ -1,19 +1,18 @@
 import React, { FC, useEffect, useState } from 'react';
-import request from '../../../utils/request';
-import { Breed, BreedResponse } from './types';
+import { Breed } from './types';
 import SimpleItemList from '../../../components/SimpleItemList';
 import Container from '../../../components/Container';
 import twcss from '../../../utils/style';
+import service from '../../../services';
 
 const BreedList: FC = () => {
   const [breeds, setBreeds] = useState<Breed[]>([]);
+  const [breedError, setBreedError] = useState({ status: false, message: '' });
 
   useEffect(() => {
     (async (): Promise<void> => {
-      const data = await request<BreedResponse>(
-        'https://dog.ceo/api/breeds/list/all'
-      ).catch((error: Error) => {
-        setBreeds([{ name: error.stack as string, types: [] }]);
+      const data = await service.breed.listAll().catch((error: Error) => {
+        setBreedError({ status: true, message: error.stack || error.message });
       });
       if (data) {
         const newBreeds: Breed[] = [];
@@ -27,6 +26,8 @@ const BreedList: FC = () => {
       }
     })();
   }, []);
+  if (breedError.status) return <div>Error</div>;
+
   return (
     <Container>
       <h1>Breed List</h1>
